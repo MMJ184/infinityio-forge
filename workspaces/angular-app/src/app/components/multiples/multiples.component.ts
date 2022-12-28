@@ -41,13 +41,13 @@ export class MultiplesComponent implements OnInit {
 
 	ngOnInit(): void {
 		// Specifying what to do with received data from main process
-		// this.electronIpc.receive<number[]>(
-		// 	WindowApiConst.MULTIPLES_OUTPUT,
-		// 	(output: number[]) => {
-		// 		// Update current data
-		// 		this.multiples = output;
-		// 	}
-		// );
+		this.electronIpc.receive<number[]>(
+			WindowApiConst.MULTIPLES_OUTPUT,
+			(output: number[]) => {
+				// Update current data
+				this.multiples = output;
+			}
+		);
 
 		// Reset multiples on form changes
 		this.timesTableForm.valueChanges.subscribe(() => {
@@ -55,7 +55,7 @@ export class MultiplesComponent implements OnInit {
 		});
 
 		// Init time tables with given random value
-		this.onSubmit();
+		// this.onSubmit();
 	}
 
 	translateIn(lang: string): void {
