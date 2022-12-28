@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain, nativeImage } from 'electron';
 import * as path from 'node:path';
 import { AbstractService } from '../services/abstract-service';
 import { MultiplesService } from '../services/multiples-service';
+import { logger } from '../shared/helper/logger.helper';
 import { Logger } from '../utils/logger';
 
 declare const global: Global;
@@ -99,6 +100,7 @@ export class Window {
 	}
 
 	private registerService<In, Out>(service: AbstractService<In, Out>) {
+		logger.info('registerService');
 		ipcMain.on(
 			service.receptionChannel(),
 			async (event: Electron.IpcMainEvent, ...parameters: any[]) => {

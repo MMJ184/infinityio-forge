@@ -3,7 +3,6 @@ import _ from 'lodash';
 import * as path from 'node:path';
 import { AppConfig } from 'shared-lib';
 import { App } from './components/app';
-import { BackendMain } from './configurations/module';
 
 declare const global: Global;
 
@@ -25,9 +24,6 @@ global.appConfig =
 	currentEnvironment === 'development'
 		? defaultConfig
 		: _.merge(defaultConfig, currentConfig);
-
-const backend = new BackendMain();
-backend.listen();
 
 // Launch app
 App.launch();

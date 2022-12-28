@@ -129,6 +129,8 @@ export class UsersIPCService {
 			req.toJsonValue()
 		);
 
+
+		
 		console.log('Angular: Request recived for Get all users.', rawRes);
 
 		return new IPCGetAllUsers.Response(rawRes).toMessage();
