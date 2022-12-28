@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"module": "commonjs",
+		"target": "es2020",
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"sourceMap": true,
+		"baseUrl": ".",
+		"outDir": ".dist",
+		"declaration": false,
+		"moduleResolution": "node",
+		"downlevelIteration": true,
+		"resolveJsonModule": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"lib": ["es2020", "dom"],
+		"paths": {
+			"*": ["node_modules/*"]
+		},
+		"types": [
+			"node",
+			"webdriverio/async",
+			"@wdio/jasmine-framework",
+			"expect-webdriverio"
+		]
+	},
+	"include": ["workspaces/electron-app/**/*", "workspaces/electron-e2e/**/*"]
+}

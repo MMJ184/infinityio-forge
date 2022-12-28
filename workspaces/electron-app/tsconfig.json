@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+		"target": "es2017",
+	  "module": "esnext"
+  },
+  "extends": "../../tsconfig.json",
+  "references": [{ "path": "../shared-lib" }]
+}
