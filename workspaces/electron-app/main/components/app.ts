@@ -1,4 +1,5 @@
 import { app, BrowserWindow, shell } from 'electron';
+import { BackendMain } from '../configurations/module';
 import { Window } from './window';
 
 declare const global: Global;
@@ -7,6 +8,9 @@ export class App {
 	private static _wrapper: Window;
 
 	public static launch(): void {
+		const backend = new BackendMain();
+		backend.listen();
+
 		app.on('window-all-closed', App.quit);
 		app.on('activate', App.start);
 		app.on('ready', App.start);

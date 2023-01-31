@@ -20,10 +20,10 @@ export class ViewsIPC {
 	}
 
 	public listen() {
-    logger.info(`electron views CHANNEL's ${IPCReadData.CHANNEL}`);
+		logger.info(`electron views CHANNEL's ${IPCReadData.CHANNEL}`);
 		ipcMain.handle(IPCReadData.CHANNEL, async (event, req: JsonValue) => {
-      logger.info(`electron views running ${IPCReadData.CHANNEL}`);
-      await this._viewRepository.readData(req);
+			logger.info(`electron views running ${IPCReadData.CHANNEL}`);
+			await this._viewRepository.readData(req);
 		});
 		ipcMain.handle(
 			IPCUpdateData.CHANNEL,

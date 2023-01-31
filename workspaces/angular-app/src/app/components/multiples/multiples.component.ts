@@ -63,8 +63,9 @@ export class MultiplesComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.getAllUsers();
+		//this.getAllUsers();
 		const input = this.timesTableForm.value.input;
+		console.log(input);
 		
 	}
 
@@ -89,7 +90,11 @@ export class MultiplesComponent implements OnInit {
 			[]
 		);
 
-		console.log(JSON.parse(JSON.stringify(response.data)));
+		if (response) {
+			console.log(JSON.parse(JSON.stringify(response.data)));
+		} else {
+			console.log("data not get from electron.");
+		}
 
 		// this.usersIPCService.rowCount = response.count;
 
