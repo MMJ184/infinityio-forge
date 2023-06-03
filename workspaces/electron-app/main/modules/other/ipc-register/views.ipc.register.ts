@@ -23,14 +23,16 @@ export class ViewsIPC {
 		logger.info(`electron views CHANNEL's ${IPCReadData.CHANNEL}`);
 		ipcMain.handle(IPCReadData.CHANNEL, async (event, req: JsonValue) => {
 			logger.info(`electron views running ${IPCReadData.CHANNEL}`);
-			await this._viewRepository.readData(req);
+			var d = await this._viewRepository.readData(req);
+			logger.info(`electron views running 111111111`, d);
+			return d;
 		});
-		ipcMain.handle(
+		ipcMain.on(
 			IPCUpdateData.CHANNEL,
 			async (event, req: JsonValue) =>
 				await this._viewRepository.updateData(req)
 		);
-		ipcMain.handle(
+		ipcMain.on(
 			IPCInsertData.CHANNEL,
 			async (event, req: JsonValue) =>
 				await this._viewRepository.insertData(req)

@@ -21,9 +21,9 @@
 				{{ 'MULTIPLES.SUBMIT' | translate }}
 			</button>
 		</form>
-
+		dd {{this.ss | json}}
 		<h3 class="results" *ngFor="let multiple of multiples; let i = index">
-			{{ timesTableForm.value.input }} * {{ 1 + i }} = {{ multiple }}
+			{{ timesTableForm.value.input }} * {{ 1 + i }} = {{ multiple }} dd {{this.ss | json}}
 		</h3>
 	</div>
 </div>

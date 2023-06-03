@@ -2,9 +2,10 @@ import * as remoteMain from '@electron/remote/main';
 import { app, BrowserWindow, ipcMain, nativeImage } from 'electron';
 import * as path from 'node:path';
 import { AbstractService } from '../services/abstract-service';
-import { MultiplesService } from '../services/multiples-service';
 import { logger } from '../shared/helper/logger.helper';
 import { Logger } from '../utils/logger';
+import { IPCReadData } from '../shared/ipc/views.ipc';
+import { JsonValue } from 'type-fest';
 
 declare const global: Global;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -15,7 +16,7 @@ export class Window {
 	constructor() {
 		this.createWindow();
 		this.loadRenderer();
-		this.registerService<number, number[]>(new MultiplesService());
+		//this.registerService<number, number[]>(new MultiplesService());
 	}
 
 	private createWindow(): void {
@@ -38,7 +39,7 @@ export class Window {
 				// which is not bundled yet in dev mode
 				sandbox: global.appConfig.isSandbox,
 				// Use a preload script to enhance security
-				preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+				//preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 			},
 		});
 
@@ -91,12 +92,12 @@ export class Window {
 
 	private openDevTools(): void {
 		this._electronWindow.webContents.openDevTools();
-		this._electronWindow.webContents.on('devtools-opened', () => {
-			this._electronWindow.focus();
-			setImmediate(() => {
-				this._electronWindow.focus();
-			});
-		});
+		// this._electronWindow.webContents.on('devtools-opened', () => {
+		// 	this._electronWindow.focus();
+		// 	setImmediate(() => {
+		// 		this._electronWindow.focus();
+		// 	});
+		// });
 	}
 
 	private registerService<In, Out>(service: AbstractService<In, Out>) {
@@ -114,6 +115,26 @@ export class Window {
 					Logger.debug(`[${service.sendingChannel()}] =====> `, output);
 					this._electronWindow.webContents.send(
 						service.sendingChannel(),
+						output
+					);
+				}
+			}
+		);
+		logger.info('registerService -- read');
+		ipcMain.on(
+			IPCReadData.CHANNEL,
+			async (event: Electron.IpcMainEvent, ...parameters: any[]) => {
+				// Handling input
+				const input = parameters[0];
+				Logger.debug(`[${IPCReadData.CHANNEL}]  =====> `, input);
+				logger.info('registerService -- read 2222222222');
+				const output: JsonValue = "demo"//await this._viewRepository.readData(req);
+
+				// Handling output
+				if (IPCReadData.CHANNEL) {
+					Logger.debug(`[${IPCReadData.CHANNEL}] =====> `, output);
+					this._electronWindow.webContents.send(
+						IPCReadData.CHANNEL,
 						output
 					);
 				}

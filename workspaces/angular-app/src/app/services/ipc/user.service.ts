@@ -119,15 +119,15 @@ export class UsersIPCService {
 		//   getCurrentLine().method
 		// );
 
-		// const rawRes: any = await this._ipcRenderer?.invoke(
-		// 	IPCReadData.CHANNEL,
-		// 	req.toJsonValue()
-		// );
-
-		const rawRes: any = await this.electronIpc.send(
+		const rawRes: any = await this.electronIpc._ipcRenderer?.invoke(
 			IPCReadData.CHANNEL,
 			req.toJsonValue()
 		);
+
+		// const rawRes: any = await this.electronIpc.send(
+		// 	IPCReadData.CHANNEL,
+		// 	req.toJsonValue()
+		// );
 
 
 		

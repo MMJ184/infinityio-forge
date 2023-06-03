@@ -23,7 +23,7 @@ export class MultiplesComponent implements OnInit {
 	// searchConfig: SearchConfig[] = [];
 	// filterData: any = {};
 	// subscriptions = new Subscription();
-
+ss:any;
 	timesTableForm = new UntypedFormGroup({
 		input: new FormControl<number>(Math.round(Math.random() * 100) % 10, {
 			nonNullable: true,
@@ -63,7 +63,7 @@ export class MultiplesComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		//this.getAllUsers();
+		this.getAllUsers();
 		const input = this.timesTableForm.value.input;
 		console.log(input);
 		
@@ -90,8 +90,10 @@ export class MultiplesComponent implements OnInit {
 			[]
 		);
 
+		this.ss = JSON.parse(JSON.stringify(response?.data));
+
 		if (response) {
-			console.log(JSON.parse(JSON.stringify(response.data)));
+			console.log("log get from db-> ",JSON.parse(JSON.stringify(response.data)));
 		} else {
 			console.log("data not get from electron.");
 		}

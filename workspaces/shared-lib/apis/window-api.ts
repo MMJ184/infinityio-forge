@@ -1,3 +1,5 @@
+import { JsonValue } from 'type-fest';
+
 export interface WindowApi {
 	/**
 	 * This method is used by the renderer process to receive data from the main process
@@ -12,4 +14,6 @@ export interface WindowApi {
 	 * @param data the data sent by the renderer process to the main process
 	 */
 	send<In>(channel: string, input: In): void;
+
+	handle(channel: string, input: JsonValue): Promise<JsonValue>;
 }

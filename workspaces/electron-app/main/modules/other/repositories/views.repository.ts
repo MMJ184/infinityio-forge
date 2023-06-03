@@ -3,6 +3,7 @@ import { fluentProvide } from 'inversify-binding-decorators';
 import { JsonValue } from 'type-fest';
 import { logger } from '../../../shared/helper/logger.helper';
 import { IPCDeleteData, IPCInsertData, IPCReadData, IPCUpdateData } from '../../../shared/ipc/views.ipc';
+import { ipcMain } from 'electron';
 
 @fluentProvide(ViewRepository).inSingletonScope().done()
 export class ViewRepository {
@@ -51,6 +52,17 @@ export class ViewRepository {
     });
 
     console.log('resMessage', resMessage.toMessage());
+
+    // ipcMain.on(IPCReadData.CHANNEL, async (event, req: JsonValue) => {
+		// 	logger.info(`electron views running ${IPCReadData.CHANNEL}`);
+		// 	await this._viewRepository.readData(req);
+		// });
+
+    // this._electronWindow.webContents.send(
+		// 				service.sendingChannel(),
+		// 				output
+		// 			);
+
     return Promise.resolve(resMessage.toJsonValue());
   }
 
