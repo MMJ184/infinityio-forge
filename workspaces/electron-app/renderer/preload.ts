@@ -33,45 +33,43 @@ if (process.env.X_NODE_ENV === 'e2e-test') {
 	contextBridge.exposeInMainWorld('api', windowApi);
 }*/
 
-// import {
-// 	contextBridge,
-// 	ipcMain,
-// 	IpcMainInvokeEvent,
-// 	ipcRenderer,
-// 	IpcRendererEvent,
-// } from 'electron';
-// import { WindowApiConst } from 'shared-lib';
-// import { JsonValue } from 'type-fest';
+import {
+	contextBridge,
+	ipcMain,
+	IpcMainInvokeEvent,
+	ipcRenderer,
+	IpcRendererEvent,
+} from 'electron';
+import { WindowApiConst } from 'shared-lib';
+import { JsonValue } from 'type-fest';
 
-// contextBridge.exposeInMainWorld('api', {
-// 	node: () => process.versions.node,
-// 	chrome: () => process.versions.chrome,
-// 	electron: () => process.versions.electron,
-// 	send: <In>(channel: string, input: In) => {
-// 		console.log('send done..................', channel, input);
+contextBridge.exposeInMainWorld('api', {
+	node: () => process.versions.node,
+	chrome: () => process.versions.chrome,
+	electron: () => process.versions.electron,
+	send: <In>(channel: string, input: In) => {
+		console.log('send done..................', channel, input);
 
-// 		if (WindowApiConst.SENDING_SAFE_CHANNELS.includes(channel)) {
-// 			ipcRenderer.send(channel, input);
-// 		}
-// 	},
-// 	receive: <Out>(channel: string, callback: (output: Out) => void) => {
-// 		// Deliberately strip event as it includes `sender`
-// 		console.log('receive done..................');
+		if (WindowApiConst.SENDING_SAFE_CHANNELS.includes(channel)) {
+			ipcRenderer.send(channel, input);
+		}
+	},
+	receive: <Out>(channel: string, callback: (output: Out) => void) => {
+		// Deliberately strip event as it includes `sender`
+		console.log('receive done..................');
 
-// 		ipcRenderer.on(channel, (_event: IpcRendererEvent, ...parameters: any[]) =>
-// 			callback(parameters[0])
-// 		);
-// 	}
-// 	,
-// 	handle: async (channel: string, input: JsonValue) => {
-// 		console.log('handle .................. ');
-// 		if (WindowApiConst.SENDING_SAFE_CHANNELS.includes(channel)) {
-// 			var d: JsonValue = await ipcRenderer.invoke(channel, input);
-// 			debugger;
-// 			console.log('handle ..---------------------', d);
-// 		}
-// 	},
-// 	// we can also expose variables, not just functions
-// });
+		ipcRenderer.on(channel, (_event: IpcRendererEvent, ...parameters: any[]) =>
+			callback(parameters[0])
+		);
+	}
+	,
+	handle: async (channel: string, input: JsonValue) => {
+		console.log('handle .................. ');
+		if (WindowApiConst.SENDING_SAFE_CHANNELS.includes(channel)) {
+			return await ipcRenderer.invoke(channel, input);
+		}
+	},
+	// we can also expose variables, not just functions
+});
 
 console.log('The preload script has been injected successfully.');
